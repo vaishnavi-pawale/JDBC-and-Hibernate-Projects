@@ -1,0 +1,17 @@
+package com.Util;
+
+import java.nio.channels.SeekableByteChannel;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+public class HibernateUtil {
+
+	private HibernateUtil() {
+	}
+	
+	public static SessionFactory sf = null;
+	
+	public static StandardServiceRegistryBuilder registry = null;
+	
+}

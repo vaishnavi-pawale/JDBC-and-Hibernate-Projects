@@ -1,0 +1,54 @@
+package com.Controller;
+
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.Entity.Employee;
+import com.HibernateUtil.HibernateUtil;
+
+public class Methods {
+
+	static SessionFactory sf = HibernateUtil.getConection();
+	static Session s = sf.openSession();
+	static Scanner sc = new Scanner(System.in);
+
+	public static void insertEmp() {
+		Employee emp = new Employee();
+
+		System.out.println("Enter Employee Id :");
+		int id = sc.nextInt();
+		emp.setEid(id);
+
+		System.out.println("Enter Employee Name : ");
+		emp.setEname(sc.next());
+
+		System.out.println("Enter Employee Address :");
+		emp.setEaddress(sc.next());
+
+		System.out.println("Enter Employee Salary : ");
+		emp.setEsalary(sc.nextDouble());
+
+		s.save(emp);
+		s.beginTransaction().commit();
+		System.out.println("Employee Details successfully inserted ");
+
+	}
+
+	public static void fetchEmp() {
+		System.out.println("Enter the ID of the Employee");
+		int id = sc.nextInt();
+		Employee emp = s.get(Employee.class, id);
+		if (emp != null) {
+			System.out.println(emp);
+		} else {
+			System.out.println("Employee Doesn't Exist Enter a valid Id");
+		}
+	}
+
+//	
+//	s.save(emp);
+//	s.beginTransaction().commit();
+
+}

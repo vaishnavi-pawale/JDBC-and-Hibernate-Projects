@@ -1,0 +1,30 @@
+package com.Entity;
+
+public class Adhar {
+
+	private int aid;
+
+	private int adharNo;
+
+	public int getAid() {
+		return aid;
+	}
+
+	public void setAid(int aid) {
+		this.aid = aid;
+	}
+
+	public int getAdharNo() {
+		return adharNo;
+	}
+
+	public void setAdharNo(int adharNo) {
+		this.adharNo = adharNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Adhar [aid=" + aid + ", adharNo=" + adharNo + "]";
+	}
+
+}

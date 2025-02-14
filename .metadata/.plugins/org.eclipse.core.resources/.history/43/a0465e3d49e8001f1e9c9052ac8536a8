@@ -1,0 +1,59 @@
+package com.Controller;
+
+import java.util.Scanner;
+
+import org.hibernate.SessionFactory;
+
+import com.Service.ServiceIMPL;
+import com.Util.HibernateUtil;
+
+public class HomeController {
+	public static void main(String[] args) {
+
+		System.out.println("\n");
+
+		System.out.println("-------------One to One Mapping -------------------");
+
+		System.out.println("What Opration do you like to perform? choose a number between 1 - 8");
+
+		System.out.println(
+				"1. Register Person with Addar\n2. Display the details of the person \n3. Desplay the adhar details \n4. Update details of the person \n5. Update Details of adhar \n6. Delete only person \n7. delete only adhar \n8. delete person with "
+						+ "adhar ");
+
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+
+		ServiceIMPL si = new ServiceIMPL();
+
+		switch (choice) {
+		case 1:
+			si.registerPersonWithAdhar();
+			break;
+
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 6:
+
+			break;
+		case 7:
+
+			break;
+		case 8:
+
+			break;
+		default:
+			break;
+		}
+
+	}
+}

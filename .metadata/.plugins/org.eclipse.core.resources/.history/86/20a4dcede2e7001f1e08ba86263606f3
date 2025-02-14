@@ -1,0 +1,14 @@
+package com.Util;
+
+import java.nio.channels.SeekableByteChannel;
+
+import org.hibernate.SessionFactory;
+
+public class HibernateUtil {
+
+	private HibernateUtil() {
+	}
+	
+	public static SessionFactory sf = null;
+	
+}

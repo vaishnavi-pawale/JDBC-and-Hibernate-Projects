@@ -1,0 +1,22 @@
+package com.Controller;
+
+import org.hibernate.SessionFactory;
+
+import com.Util.HibernateUtil;
+
+public class HomeController {
+	public static void main(String[] args) {
+		
+		System.out.println(\n);
+
+		System.out.println("-------------One to One Mapping -------------------");
+
+		System.out.println("What Opration do you like to perfdrm ?");
+
+		System.out.println(
+				"1. Register Person with Addar\n2. Display the details of the person \n3. Desplay the adhar details \n4. Update details of the person \n5. Update Details of adhar \n6. Delete only person \n7. delete only adhar \n8. delete person with "
+						+ "adhar ");
+
+		
+	}
+}

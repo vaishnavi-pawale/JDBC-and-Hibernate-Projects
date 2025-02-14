@@ -1,0 +1,5 @@
+package com.Configuration;
+
+public class HibernateUtil {
+
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class table="Company" name="com.Company">
+
+		<id name="cid" type="int"></id>
+
+		<property name="cname" type="string"></property>
+
+		<property name="noOfDepatment" type="int"></property>
+	</class>
+
+</hibernate-mapping>
+
+
+
+
+
+

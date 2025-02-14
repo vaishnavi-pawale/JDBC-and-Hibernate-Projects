@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Hibernate(JavaBased)&apos; to &apos;Hibernate-2(JavaBased)&apos;" description="Rename resource &apos;Hibernate(JavaBased)&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Hibernate(JavaBased)" name="Hibernate-2(JavaBased)" stamp="1731329463289" updateReferences="true"/>
+</session>

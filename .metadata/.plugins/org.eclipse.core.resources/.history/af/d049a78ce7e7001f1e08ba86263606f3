@@ -1,0 +1,12 @@
+package com.Controller;
+
+import org.hibernate.SessionFactory;
+
+import com.Util.HibernateUtil;
+
+public class HomeController {
+	public static void main(String[] args) {
+		SessionFactory s = HibernateUtil.getConnection();
+
+	}
+}

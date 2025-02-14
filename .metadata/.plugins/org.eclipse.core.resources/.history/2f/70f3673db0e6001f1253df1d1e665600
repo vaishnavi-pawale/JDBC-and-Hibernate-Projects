@@ -1,0 +1,114 @@
+package com.Controller;
+
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.Entity.Employee;
+import com.HibernateUtil.HibernateUtil;
+
+public class Methods {
+
+	static SessionFactory sf = HibernateUtil.getConection();
+	static Session s = sf.openSession();
+	static Scanner sc = new Scanner(System.in);
+
+	public static void insertEmp() {
+		Employee emp = new Employee();
+
+		System.out.println("Enter Employee Id :");
+		int id = sc.nextInt();
+		emp.setEid(id);
+
+		System.out.println("Enter Employee Name : ");
+		emp.setEname(sc.next());
+
+		System.out.println("Enter Employee Address :");
+		emp.setEaddress(sc.next());
+
+		System.out.println("Enter Employee Salary : ");
+		emp.setEsalary(sc.nextDouble());
+
+		s.save(emp);
+		s.beginTransaction().commit();
+		System.out.println("Employee Details successfully inserted ");
+
+	}
+
+	public static void fetchEmp() {
+		System.out.println("Enter the ID of the Employee");
+		int id = sc.nextInt();
+		Employee emp = s.get(Employee.class, id);
+		if (emp != null) {
+			System.out.println(emp);
+		} else {
+			System.out.println("Employee Doesn't Exist Enter a valid Id");
+			fetchEmp();
+		}
+	}
+
+	public static void updateEmp() {
+
+		System.out.println("Enter the Employee Id : ");
+		int id = sc.nextInt();
+		Employee emp = s.get(Employee.class, id);
+		if (emp != null) {
+			boolean flag = true;
+
+			while (flag) {
+				System.out.println("Chose a number what you want to update");
+				System.out.println(
+						"1. Update the Employee Name\n2. Update the Employee Address\n3. Update the Employee Salary\n4. Exit");
+
+				int choice = sc.nextInt();
+				switch (choice) {
+				case 1:
+					System.out.println("Enter the new Employee name: ");
+					emp.setEname(sc.next());
+					break;
+
+				case 2:
+					System.out.println("Enter the new Employee address: ");
+					emp.setEaddress(sc.next());
+					break;
+					
+				case 3:
+					System.out.println("Enter the new Employee salary: ");
+					emp.setEsalary(sc.nextInt());
+					break;
+					
+				case 4:
+					flag = false;
+					break;
+				default:
+					System.out.println("Enter a valid number between 1- 4");
+					break;
+				}
+				
+				s.update(emp);
+				s.beginTransaction().commit();
+				System.out.println("Employee  updated successfully !!!");
+			}
+
+		}
+
+	}
+
+	public static void deleteEmp() {
+		System.out.println("Enter the employee ID you want to delete: ");
+		int id = sc.nextInt();
+		Employee emp = s.get(Employee.class, id);
+		if(emp != null) {
+			s.delete(emp);
+			s.beginTransaction().commit();
+			System.out.println("EMployee deleted Successfully");
+		}else {
+			System.out.println("Enter a valid employee ID !!");
+		}
+	}
+//	
+//	s.save(emp);
+//	s.beginTransaction().commit();
+
+}

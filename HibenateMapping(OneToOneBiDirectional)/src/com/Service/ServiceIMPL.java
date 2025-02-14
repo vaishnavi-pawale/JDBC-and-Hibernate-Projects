@@ -1,0 +1,312 @@
+package com.Service;
+
+import com.Configuration.HibernateUtil;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.hibernate.service.Service;
+
+import com.Entity.Adhar;
+import com.Entity.Person;
+import antlr.collections.List;
+
+public class ServiceIMPL implements com.Service.Service {
+
+	SessionFactory sf = HibernateUtil.getConnection();
+	Scanner sc = new Scanner(System.in);
+
+	@Override
+	public void registerPersonWithAdhar() {
+		Scanner sc = new Scanner(System.in);
+		Session session = sf.openSession();
+		System.out.println("How many Persons You want to add :- ");
+		int n = sc.nextInt();
+		for (int i = 1; i <= n; i++) {
+			Person p = new Person();
+			System.out.println("Enter the Person Name :- ");
+			p.setPname(sc.next());
+
+			System.out.println("ENter the Person Address :- ");
+			p.setPaddress(sc.next());
+
+			System.out.println("Enter the person Age :- ");
+			p.setAge(sc.nextInt());
+
+			Adhar ad = new Adhar();
+			System.out.println("Enter the Adhar Number :- ");
+			ad.setAdharNo(sc.next());
+
+			p.setAdhar(ad);
+			ad.setPerson(p);
+
+			session.save(p);
+			session.save(ad);
+
+			session.beginTransaction().commit();
+			System.out.println("Person added with adhar");
+
+		}
+
+	}
+
+	@Override
+	public void displayPersonDetailsOnly() {
+		Scanner sc = new Scanner(System.in);
+		Session s = sf.openSession();
+		Query query = s.createQuery("select pid,pname,paddress,Age from Person");
+		java.util.List<Object[]> allPersons = query.getResultList();
+		for (Object[] obj : allPersons) {
+			System.out.println(Arrays.toString(obj));
+		}
+
+	}
+
+	@Override
+	public void displayAdharDetailsOnly() {
+		Scanner sc = new Scanner(System.in);
+		Session s = sf.openSession();
+		Query query = s.createQuery("select aid,adharNo from Adhar");
+		java.util.List<Object[]> allPersons = query.getResultList();
+		for (Object[] obj : allPersons) {
+			System.out.println(Arrays.toString(obj));
+		}
+	}
+
+	@Override
+	public void updatePersonDetailsOnly() {
+		Session s = sf.openSession();
+		System.out.println("Enter the Person's Id:-");
+		int id = sc.nextInt();
+		Person person = s.get(Person.class, id);
+
+		if (person != null) {
+			boolean flag = true;
+			while (flag) {
+				System.out.println("Choose a option Which You want to Update");
+				System.out.println("1. Name\n2. Address\n3. Age\n4. Exit");
+				System.out.println("Enter the option btween 1 - 4:-");
+				int choice = sc.nextInt();
+				switch (choice) {
+				case 1:
+
+					System.out.println("Enter the New name :- ");
+					person.setPname(sc.next());
+
+					break;
+				case 2:
+					System.out.println("Enter the New Address:- ");
+					person.setPaddress(sc.next());
+					break;
+
+				case 3:
+					System.out.println("Enter the New age :- ");
+					person.setAge(sc.nextInt());
+					break;
+
+				case 4:
+					flag = false;
+					break;
+
+				default:
+					System.out.println("Enter the valid Option!!!");
+					break;
+				}
+			}
+		}
+
+		s.beginTransaction().commit();
+
+		System.out.println("Succefully Updated");
+
+	}
+
+	@Override
+	public void updateAdharDetailsOnly() {
+		Session s = sf.openSession();
+		System.out.println("Enter the Adhar Id:-");
+		int id = sc.nextInt();
+		Adhar adhar = s.get(Adhar.class, id);
+
+		if (adhar != null) {
+
+			System.out.println("Enter the New Adhar Number :-");
+			adhar.setAdharNo(sc.next());
+
+		}
+
+		s.update(adhar);
+		s.beginTransaction().commit();
+
+		System.out.println("Succefully Updated");
+
+	}
+
+	@Override
+	public void deletePersonOnly() {
+		Scanner sc = new Scanner(System.in);
+		Session session = sf.openSession();
+		System.out.println("Enter the PersonID :- ");
+		Person person = session.get(Person.class, sc.nextInt());
+
+		if (person != null) {
+
+			person.setAdhar(null);
+			session.update(person);
+			session.delete(person);
+			session.beginTransaction().commit();
+
+		} else {
+			System.out.println("Id Does not exit");
+		}
+	}
+
+	@Override
+	public void deleteAdharOnly() {
+
+		Session s = sf.openSession();
+		System.out.println("Enter the Adhar id :- ");
+		int id = sc.nextInt();
+		Adhar adhar = s.get(Adhar.class, id);
+		if (adhar != null) {
+			s.delete(adhar);
+			s.beginTransaction().commit();
+			System.out.println("Deleted successfully");
+		} else {
+			System.out.println("The Entered Id is not present.");
+		}
+	}
+
+	@Override
+	public void deletePersonWithAdhar() {
+		Session session = sf.openSession();
+		System.out.println("Enter the PersonID :- ");
+		Person person = session.get(Person.class, sc.nextInt());
+
+		if (person != null) {
+			session.delete(person);
+			session.beginTransaction().commit();
+			System.out.println("Deleted successfully");
+		} else {
+			System.out.println("Id Does not exit");
+		}
+	}
+
+	@Override
+	public void displayPersonDetailsUsingAid() {
+		Scanner sc = new Scanner(System.in);
+		Session session = sf.openSession();
+		System.out.println("Enter the AdharID :- ");
+		Adhar adhar = session.get(Adhar.class, sc.nextInt());
+
+		if (adhar != null) {
+
+			Person person = adhar.getPerson();
+
+			System.out.println(person.getPid());
+			System.out.println(person.getPname());
+			System.out.println(person.getPaddress());
+
+			person.setAdhar(adhar);
+			adhar.setPerson(person);
+
+		} else {
+			System.out.println("Id does not Exist in the DataBase");
+		}
+	}
+
+	@Override
+	public void displayAdharDetailsUsingAid() {
+		Session s = sf.openSession();
+		System.out.println("Enter the Adhar Id of the person:- ");
+		int id = sc.nextInt();
+		Adhar adhar = s.get(Adhar.class, id);
+
+		if (adhar != null) {
+			System.out.println(
+					"Adhar Number of the person having Adhar id " + adhar.getAid() + " is :- " + adhar.getAdharNo());
+
+		} else {
+			System.out.println("Enter a valid Adhar Id: -");
+		}
+
+	}
+
+	@Override
+	public void updatePersonDetailsUsingAid() {
+		Session session = sf.openSession();
+		System.out.println("Enter the AdharID :- ");
+		Adhar adhar = session.get(Adhar.class, sc.nextInt());
+
+		if (adhar != null) {
+
+			Person person = adhar.getPerson();
+
+			System.out.println("Enter the New Person name :- ");
+			person.setPname(sc.next());
+
+			System.out.println("Enter the New Person Address :- ");
+			person.setPaddress(sc.next());
+
+			session.update(person);
+			session.beginTransaction().commit();
+			System.out.println("Updated");
+
+		} else {
+			System.out.println("Id Invalid");
+		}
+	}
+
+	@Override
+	public void updateAdharDetailsUsingAid() {
+		Session s = sf.openSession();
+		System.out.println("Enter the Adhar Id:- ");
+		Adhar adhar = s.get(Adhar.class, sc.nextInt());
+
+		if (adhar != null) {
+			System.out.println("Enter the New Adhar number :-");
+			adhar.setAdharNo(sc.next());
+
+			s.update(adhar);
+
+			s.beginTransaction().commit();
+			System.out.println("successfully updated!");
+		} else {
+
+			System.out.println("Enter a valid ID:- ");
+			updateAdharDetailsUsingAid();
+		}
+	}
+
+	@Override
+	public void deletePersondetailsUsingAid() {
+
+		Session session = sf.openSession();
+		System.out.println("Enter the Adhaar Id :- ");
+		Adhar adhar = session.get(Adhar.class, sc.next());
+
+		if (adhar != null) {
+
+			Person person = adhar.getPerson();
+			person.setAdhar(null);
+			adhar.setPerson(null);
+			session.update(person);
+			session.delete(person);
+			session.beginTransaction().commit();
+			System.out.println("Person is deleted which is associated with Adhar Id "+adhar);
+			
+		} else {
+			System.out.println("Enter Valide adhar Id:- ");
+			deletePersondetailsUsingAid();
+
+		}
+	}
+
+	@Override
+	public void deleteAdharDetailsUsingAid() {
+		// TODO Auto-generated method stub
+
+	}
+}

@@ -1,0 +1,34 @@
+package com.Util;
+
+import java.nio.channels.SeekableByteChannel;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Environment;
+
+public class HibernateUtil {
+
+	private HibernateUtil() {
+	}
+	
+	private static SessionFactory sf = null;
+	
+	private static StandardServiceRegistryBuilder registry = null;
+	
+	public static SessionFactory getConnection() {
+		
+		Map<String , Object> map = new HashMap<String, Object>();
+		
+		map.put(Environment.DRIVER, "com.mysql.jdbc.Diver");
+		map.put(Environment.URL, "jdbc:mysql:/localhost:3306/HibernateDB");
+		map.put(Environment.USER, "root");
+		map.put(Environment.PASS, "root");
+
+		
+		return sf;
+		
+	}
+	
+}

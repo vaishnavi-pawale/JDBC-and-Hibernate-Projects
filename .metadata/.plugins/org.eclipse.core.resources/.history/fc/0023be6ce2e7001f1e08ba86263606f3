@@ -1,0 +1,8 @@
+package com.Entity;
+
+public class Adhar {
+
+	private int aid ;
+	
+	private int adharNo;
+}
